@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scatter</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <div class="canvas"></div>
+    <svg class="svg2">
+      <circle></circle>
+      <circle></circle>
+      <circle></circle>
+      <circle></circle>
+      <circle></circle>
+      <circle></circle>
+      <circle></circle>
+    </svg>
+    <script>
+      const sampleData = [
+        [5, 20, 30, '#f00'],
+        [5, 320, 90, '#f00'],
+        [5, 150, 50, '#f00'],
+        [5, 120, 730, '#f00'],
+        [5, 530, 110, '#f00'],
+        [5, 410, 20, '#f00'],
+      ];
+
+      const svg = d3
+        .select('.canvas')
+        .append('svg')
+        .attr('width', 1000)
+        .attr('height', 1000);
+
+      const padding = 10;
+
+      svg
+        .selectAll('circle')
+        .data(sampleData)
+        .enter()
+        .append('circle')
+        .attr('r', (data) => data[0])
+        .attr('cx', (data) => data[1] + padding)
+        .attr('cy', (data) => data[2] + padding)
+        .attr('fill', (data) => data[3]);
+    </script>
+    <script>
+      const sampleData2 = [
+        [5, 20, 30, '#f00'],
+        [15, 320, 90, '#f00'],
+        [25, 150, 50, '#f00'],
+      ];
+
+      const svg2 = d3.select('.svg2');
+
+      svg2
+        .selectAll('circle')
+        .data(sampleData2)
+        .attr('r', (data) => data[0])
+        .attr('cx', (data) => data[1] + padding)
+        .attr('cy', (data) => data[2] + padding)
+        .attr('fill', (data) => data[3])
+        .exit()
+        .remove();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <script>
+      const f1 = d3
+        .scaleBand()
+        .domain(['one', 'two', 'three', 'four'])
+        .range([0, 100]);
+
+      console.log(f1('one'));
+      console.log(f1('two'));
+      console.log(f1('three'));
+      console.log(f1('four'));
+
+      console.log(f1.bandwidth());
+    </script>
+  </body>
+</html>

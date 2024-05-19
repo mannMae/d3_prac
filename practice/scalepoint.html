@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <script>
+      const f1 = d3.scalePoint().range([0, 100]).domain([10, 12, 20, 30, 40]);
+      console.log(f1(40));
+
+      const f2 = d3
+        .scalePoint()
+        .range([0, 100])
+        .domain(['a', 'b', 'c', 'd', 'e']);
+      console.log(f2('c'));
+
+      const f3 = d3
+        .scalePoint()
+        .range([0, 100])
+        .domain(['a', 'b', 'c', 'd'])
+        .padding(0.3);
+      console.log(f3('d'));
+
+      const f4 = d3.scalePoint().range([100, 200]).domain(['a', 'b', 'c', 'd']);
+      console.log(f4('b'));
+    </script>
+  </body>
+</html>

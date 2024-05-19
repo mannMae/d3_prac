@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <svg width="500px" height="500px">
+      <g>
+        <circle cx="50" cy="50" r="30"></circle>
+        <circle cx="150" cy="150" r="30"></circle>
+        <circle cx="250" cy="250" r="30"></circle>
+        <!-- <circle cx="350" cy="350" r="30"></circle> -->
+        <rect
+          x="200"
+          y="50"
+          width="100"
+          height="100"
+          style="fill: chocolate; stroke: black; stroke-width: 50px"
+        ></rect>
+        <rect
+          x="400"
+          y="50"
+          width="100"
+          height="100"
+          style="fill: chocolate"
+        ></rect>
+        <path d="M 100,300 100,350, 200,300 200,350" style="fill: blank"></path>
+        <path d="M 300,300 300,350, 350,350 350,300" style="fill: blank"></path>
+        <text x="400" y="400">Hello World</text>
+      </g>
+    </svg>
+    <div class="canvas"></div>
+    <script>
+      const canvas = d3.select('.canvas');
+
+      const svg = canvas.append('svg');
+      svg.attr('height', 1000).attr('width', 1000);
+
+      const text = svg.append('text');
+      text.attr('x', 200).attr('y', 200).text('hello world');
+      text
+        .style('font-weight', 'bold')
+        .style('font-size', '34px')
+        .style('font-family', 'Nanum Pen Script');
+
+      const rect = svg.append('rect');
+      rect.attr('x', 200).attr('y', 200);
+      rect.attr('width', 200).attr('height', 200).attr('fill', 'hotpink');
+
+      const circle = svg.append('circle');
+      circle.attr('r', 50).attr('cx', 200),
+        attr('cy', 200).attr('fill', 'blue');
+
+      svg
+        .append('line')
+        .attr('x1', 400)
+        .attr('y1', 400)
+        .attr('x2', 500)
+        .attr('y2', 500)
+        .attr('stroke', 'red');
+    </script>
+  </body>
+</html>
