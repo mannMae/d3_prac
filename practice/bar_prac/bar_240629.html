@@ -15,6 +15,7 @@
 
       const svg = d3
         .select('.canvas')
+        .append('svg')
         .attr('width', width)
         .attr('height', height);
 
@@ -52,7 +53,7 @@
             .domain([0, d3.max(data, (d) => d.확진자수)])
             .range([graphHeight, 0]);
 
-          const bars = d3.selectAll('rect').data(data);
+          const bars = graph.selectAll('rect').data(data);
 
           bars
             .enter()
@@ -80,7 +81,8 @@
                 : x(reg);
             })
             .attr('y', (d) => y(d.확진자수) - 5)
-            .text((d) => d.확진자수);
+            .text((d) => d.확진자수)
+            .style('font-size', '12px');
 
           const xAxis = d3.axisBottom(x);
           const yAxis = d3.axisLeft(y);
