@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <h1>현황</h1>
+    <div class="canvas"></div>
+    <script>
+      const width = 800;
+      const height = 800;
+      const svg = d3
+        .select('.canvas')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      const [paddingTop, paddingBottom, paddingLeft, paddingRight] = [
+        30, 30, 60, 30,
+      ];
+      const graphWidth = width - paddingLeft - paddingRight;
+      const graphHeight = height - paddingTop - paddingBottom;
+
+      const graph = svg
+        .append('g')
+        .attr('width', graphWidth)
+        .attr('height', graphHeight)
+        .attr('transform', `translate(${paddingLeft}, ${paddingTop})`);
+
+      const xAxisG = graph
+        .append('g')
+        .attr('transform', `translate(0, ${graphHeight})`);
+      const yAxisG = graph.append('g');
+
+      d3.json('../data/data4.json')
+        .then((data) => {
+          data.shift();
+
+          const x = d3
+            .scaleBand()
+            .domain(data.map((d) => d.지역이름))
+            .range([0, graphWidth])
+            .padding(0.25);
+
+          const y = d3
+            .scaleLinear()
+            .domain([0, d3.max(data, (d) => d.확진자수)])
+            .range([graphHeight, 0]);
+
+          const bars = graph.selectAll('rect').data(data);
+          bars
+            .enter()
+            .append('rect')
+            .attr('width', x.bandwidth)
+            .attr('height', (d) => graphHeight - y(d.확진자수))
+            .attr('x', (d) => x(d.지역이름))
+            .attr('y', (d) => y(d.확진자수))
+            .attr('fill', 'tomato');
+          bars
+            .enter()
+            .append('text')
+            .text((d) => d.확진자수)
+            .attr('x', (d) => x(d.지역이름) + x.bandwidth() / 10)
+            .attr('y', (d) => y(d.확진자수) - 5)
+            .style('font-size', '12px');
+
+          const line = d3
+            .line()
+            .x((d) => x(d.지역이름) + x.bandwidth() / 2)
+            .y((d) => y(d.확진자수));
+
+          bars
+            .enter()
+            .append('path')
+            .attr('fill', 'none')
+            .attr('stroke', 'tomato')
+            .attr('stroke-width', '2px')
+            .attr('d', line(data));
+
+          const xAxis = d3.axisBottom(x);
+          const yAxis = d3.axisLeft(y);
+
+          xAxisG.call(xAxis);
+          yAxisG.call(yAxis);
+
+          xAxisG
+            .selectAll('text')
+            .attr('transform', 'rotate(-45)')
+            .attr('text-anchor', 'end')
+            .attr('fill', 'tomato');
+        })
+        .catch((error) => console.error(error));
+    </script>
+  </body>
+</html>
