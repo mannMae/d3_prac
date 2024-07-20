@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <h1>현황</h1>
+    <div class="canvas"></div>
+    <script>
+      const data = [5, 15, 10, 20, 5, 10, 25, 15];
+      const xfunction = (data, index) => index * 10;
+      const yfunction = (data, index) => 100 - data;
+
+      const f = d3.line().x(xfunction).y(yfunction).curve(d3.curveBasis);
+      const f2 = d3.line().x(xfunction).y(yfunction).curve(d3.curveBumpX);
+      const f3 = d3.line().x(xfunction).y(yfunction).curve(d3.curveStep);
+
+      const svg = d3
+        .select('.canvas')
+        .append('svg')
+        .attr('width', 500)
+        .attr('height', 500);
+
+      const lines = svg.selectAll('path').data(data);
+      lines
+        .enter()
+        .append('path')
+        .attr('fill', 'none')
+        .attr('stroke', 'blue')
+        .attr('stroke-width', '2px')
+        .attr('d', f(data));
+      lines
+        .enter()
+        .append('path')
+        .attr('fill', 'none')
+        .attr('stroke', 'gray')
+        .attr('stroke-width', '2px')
+        .attr('d', f2(data));
+      lines
+        .enter()
+        .append('path')
+        .attr('fill', 'none')
+        .attr('stroke', 'tomato')
+        .attr('stroke-width', '2px')
+        .attr('d', f3(data));
+    </script>
+  </body>
+</html>
